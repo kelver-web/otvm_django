@@ -18,8 +18,13 @@ def category(request, category_id):
         category__id=category_id,
         is_published=True
     ).order_by('-id')
+
+    if not recipes:
+        return render(request, 'recipes/erros/404.html')
+    
     return render(request, 'recipes/pages/category.html', context={
         'recipes': recipes,
+        'title': f'{recipes.first().category.name} - Category | '
     })
 
 
